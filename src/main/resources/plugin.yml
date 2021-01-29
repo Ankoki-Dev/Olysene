@@ -1,0 +1,6 @@
+name: Olysene
+version: ${project.version}
+main: com.ankoki.olysene.Olysene
+description: '§ePlugin which provides quick and easy utilities for developers §4❤'
+author: 'Ankoki'
+api-version: 1.16

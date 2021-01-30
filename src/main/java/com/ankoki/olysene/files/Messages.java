@@ -16,13 +16,16 @@ import java.nio.file.StandardCopyOption;
  * {
  *     "key": "value"
  * }
- * This should only be called onEnable and that instance should be passed around.
+ * This should only be instantiated onEnable and that instance should be passed around.
  */
 public class Messages {
+    public static boolean init;
     private static String NULL_VALUE = "<NULL>";
     private final JsonObject lang;
 
-    public Messages(JavaPlugin plugin, String resourceName) throws JsonParseException, IOException, IllegalStateException {
+    public Messages(JavaPlugin plugin, String resourceName) throws JsonParseException, IOException, IllegalStateException, IllegalAccessException {
+        if (init) throw new IllegalAccessException("Only one instance of this class is allowed!");
+        init = true;
         File langFolder = new File(plugin.getDataFolder(), "lang");
         File jsonFile = new File(langFolder, resourceName);
         if (!jsonFile.exists()) {
@@ -36,7 +39,7 @@ public class Messages {
         lang = parser.parse(new BufferedReader(new FileReader(jsonFile))).getAsJsonObject();
     }
 
-    public Messages(JavaPlugin plugin, String resourceName, String nullValue) throws IOException {
+    public Messages(JavaPlugin plugin, String resourceName, String nullValue) throws IOException, IllegalAccessException {
         this(plugin, resourceName);
         NULL_VALUE = nullValue;
     }

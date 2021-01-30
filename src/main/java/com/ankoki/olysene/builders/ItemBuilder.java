@@ -4,6 +4,7 @@ import com.ankoki.olysene.utils.Enchant;
 import com.ankoki.olysene.utils.Utils;
 import com.ankoki.olysene.utils.Validate;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -15,17 +16,20 @@ public class ItemBuilder {
     }
 
     public ItemBuilder(Material material) {
+        Validate.notNull(material, "Material cannot be null!");
         if (isIllegalType(material)) throw new IllegalArgumentException("Material cannot be air or water!");
         this.item = new ItemStack(material);
     }
 
     public ItemBuilder(Material material, int count) {
+        Validate.notNull(material, "Material cannot be null!");
         if (isIllegalType(material)) throw new IllegalArgumentException("Material cannot be air or water!");
         Validate.isPositive(count, "Count cannot equal to or less than 0!");
         this.item = new ItemStack(material, count);
     }
 
     public ItemBuilder setLore(LoreBuilder loreBuilder) {
+        Validate.notNull(loreBuilder, "LoreBuilder cannot be null!");
         ItemMeta meta = item.getItemMeta();
         Validate.notNull(meta, "ItemMeta cannot be null!");
         meta.setLore(loreBuilder.build());
@@ -34,6 +38,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setDisplayName(String name) {
+        Validate.notNull(name, "The new display name cannot be null!");
         ItemMeta meta = item.getItemMeta();
         Validate.notNull(meta, "ItemMeta cannot be null!");
         meta.setDisplayName(Utils.coloured(name));
@@ -42,6 +47,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder addEnchant(Enchant enchant, int level) {
+        Validate.notNull(enchant, "Enchant cannot be null!");
         ItemMeta meta = item.getItemMeta();
         Validate.notNull(meta, "ItemMeta cannot be null!");
         meta.addEnchant(enchant.getBukkitEnchantment(), level, false);
@@ -52,6 +58,15 @@ public class ItemBuilder {
     public ItemBuilder setType(Material material) {
         if (isIllegalType(material)) throw new IllegalArgumentException("Material cannot be air or water!");
         item.setType(material);
+        return this;
+    }
+    
+    public ItemBuilder addFlag(ItemFlag flag) {
+        Validate.notNull(flag, "ItemFlag cannot be null!");
+        ItemMeta meta = item.getItemMeta();
+        Validate.notNull(meta, "ItemMeta cannot be null!");
+        meta.addItemFlags(flag);
+        item.setItemMeta(meta);
         return this;
     }
 

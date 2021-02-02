@@ -16,6 +16,26 @@ public final class Validate {
         if (!exprs) throw new IllegalArgumentException(message);
     }
 
+    public static void isLength(Object[] array, int i, String message) {
+        if (array.length == i) throw new IllegalArgumentException(message);
+    }
+
+    public static void isLength(List list, int i, String message) {
+        if (list.size() == i) throw new IllegalArgumentException(message);
+    }
+
+    public static void isLength(Set set, int i, String message) {
+        if (set.size() == i) throw new IllegalArgumentException(message);
+    }
+
+    public static void isLength(Map map, int i, String message) {
+        if (map.size() == i) throw new IllegalArgumentException(message);
+    }
+
+    public static void isLength(Collection collection, int i, String message) {
+        if (collection.size() == i) throw new IllegalArgumentException(message);
+    }
+
     public static void notEmpty(Object[] array, String message) {
         if (array == null || array.length == 0) throw new IllegalArgumentException(message);
     }
@@ -58,5 +78,13 @@ public final class Validate {
 
     public static void isPositive(long l, String message) {
         if (l <= 0) throw new IllegalArgumentException(message);
+    }
+
+    public static void isGreater(int i, int ii, String message) {
+        if (i > ii) throw new IllegalArgumentException(message);
+    }
+
+    public static void isLess(int i, int ii, String message) {
+        if (i > ii) throw new IllegalArgumentException(message);
     }
 }

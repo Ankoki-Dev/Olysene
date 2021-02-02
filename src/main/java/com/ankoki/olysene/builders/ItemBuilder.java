@@ -1,5 +1,6 @@
 package com.ankoki.olysene.builders;
 
+import com.ankoki.olysene.utils.Builder;
 import com.ankoki.olysene.utils.Enchant;
 import com.ankoki.olysene.utils.Utils;
 import com.ankoki.olysene.utils.Validate;
@@ -8,8 +9,16 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ItemBuilder {
+public class ItemBuilder extends Builder<ItemStack> {
     private final ItemStack item;
+
+    public ItemBuilder(ItemStack item, int stackSize) {
+        this.item = item;
+        if (item.getType() == Material.SNOWBALL || item.getType() == Material.ENDER_PEARL) {
+            Validate.isLess(stackSize, 17, "The max stack size for this item is 16!");
+        }
+        item.setAmount(stackSize);
+    }
 
     public ItemBuilder(ItemStack item) {
         this.item = item;
@@ -55,22 +64,67 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addEnchant(Enchant enchant) {
+        Validate.notNull(enchant, "Enchant cannot be null!");
+        ItemMeta meta = item.getItemMeta();
+        Validate.notNull(meta, "ItemMeta cannot be null!");
+        meta.addEnchant(enchant.getBukkitEnchantment(), 1, false);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addEnchants(Enchant... enchants) {
+        Validate.notNull(enchants, "Enchants cannot be null!");
+        ItemMeta meta = item.getItemMeta();
+        Validate.notNull(meta, "ItemMeta cannot be null!");
+        for (Enchant enchant : enchants) {
+            meta.addEnchant(enchant.getBukkitEnchantment(), 1, false);
+        }
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addEnchants(int level, Enchant... enchants) {
+        Validate.notNull(enchants, "Enchants cannot be null!");
+        ItemMeta meta = item.getItemMeta();
+        Validate.notNull(meta, "ItemMeta cannot be null!");
+        for (Enchant enchant : enchants) {
+            meta.addEnchant(enchant.getBukkitEnchantment(), level, false);
+        }
+        item.setItemMeta(meta);
+        return this;
+    }
+
     public ItemBuilder setType(Material material) {
         if (isIllegalType(material)) throw new IllegalArgumentException("Material cannot be air or water!");
         item.setType(material);
         return this;
     }
-    
-    public ItemBuilder addFlag(ItemFlag flag) {
-        Validate.notNull(flag, "ItemFlag cannot be null!");
+
+    public ItemBuilder addFlags(ItemFlag... flags) {
+        Validate.notNull(flags, "ItemFlag cannot be null!");
         ItemMeta meta = item.getItemMeta();
         Validate.notNull(meta, "ItemMeta cannot be null!");
-        meta.addItemFlags(flag);
-        item.setItemMeta(meta);
+        meta.addItemFlags(flags);
         return this;
     }
 
-    public ItemStack build() {
+    public ItemBuilder setGlowing() {
+        if (item.getType() == Material.BOW || item.getType() == Material.TRIDENT) {
+            this.addEnchant(Enchant.EFFICIENCY);
+        } else {
+            this.addEnchant(Enchant.INFINITY);
+        }
+        this.addFlags(ItemFlag.HIDE_ENCHANTS);
+        return this;
+    }
+
+    public String getName() {
+        return item.getType().toString().toLowerCase().replace("_", " ");
+    }
+
+    @Override
+    protected ItemStack build() {
         return item;
     }
 

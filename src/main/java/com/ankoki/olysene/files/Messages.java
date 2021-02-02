@@ -11,8 +11,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-/*
- * This is to parse JSON files for language. An example of a en_gb.json is:
+/**
+ * @author Ankoki
+ * @apiNote This is to parse JSON files for language.
+ * An example of a en_gb.json is:
  * {
  *     "key": "value"
  * }

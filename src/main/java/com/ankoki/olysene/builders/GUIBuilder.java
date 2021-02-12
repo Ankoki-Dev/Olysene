@@ -24,9 +24,7 @@ public class GUIBuilder extends Builder<Inventory> {
         mainInv = Bukkit.createInventory(null, rows, Utils.coloured(name));
     }
 
-    public GUIBuilder(int rows, String name, InventoryType type) {
-        Validate.isGreater(rows, 9, "You cannot have an inventory with more than 9 rows!");
-        Validate.isLess(rows, 2, "You cannot have an inventory with less than 2 rows!");
+    public GUIBuilder(String name, InventoryType type) {
         mainInv = Bukkit.createInventory(null, type, Utils.coloured(name));
     }
 

@@ -3,6 +3,7 @@ package com.ankoki.olysene.builders;
 import com.ankoki.olysene.utils.Builder;
 import com.ankoki.olysene.utils.Utils;
 import com.ankoki.olysene.utils.Validate;
+import com.ankoki.olysene.utils.events.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
@@ -14,6 +15,7 @@ import java.util.*;
 public class GUIBuilder extends Builder<Inventory> {
     private final Inventory mainInv;
     private final List<Inventory> pages = new ArrayList<>();
+    public static Map<Inventory, Map<Integer, ClickEvent>> allClickEvents = new HashMap<>();
     private Material pageMaterial = null;
 
     public GUIBuilder(int rows, String name) {
@@ -67,6 +69,15 @@ public class GUIBuilder extends Builder<Inventory> {
         for (int slot : getBorderSlots(this.mainInv)) {
             mainInv.setItem(slot, item);
         }
+        return this;
+    }
+
+    public GUIBuilder setClickEvent(ClickEvent event, int... slots) {
+        Map<Integer, ClickEvent> map = allClickEvents.get(mainInv) == null ? new HashMap<>() : allClickEvents.get(mainInv);
+        for (int i : slots) {
+            map.put(i, event);
+        }
+        allClickEvents.put(mainInv, map);
         return this;
     }
 

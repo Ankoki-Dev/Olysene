@@ -3,6 +3,7 @@ package com.ankoki.olysene.utils;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
+import java.awt.*;
 import java.util.TreeMap;
 
 public final class Utils {
@@ -65,5 +66,26 @@ public final class Utils {
         int vFin = vMajor + vMinor;
 
         return sFin >= vFin;
+    }
+
+    //use 0.3, 0.3, 0.3, 0, 2, 4
+    public static String rainbow(String message, double freq1, double freq2, double freq3,
+                                 double phase1, double phase2, double phase3, boolean pastel) {
+        int center = pastel ? 200 : 128;
+        int width = pastel ? 55 : 127;
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (String s : message.split("")) {
+            float red = (float) (Math.sin(freq1 * i + phase1) * width + center);
+            float green = (float) (Math.sin(freq2 * i + phase2) * width + center);
+            float blue = (float) (Math.sin(freq3 * i + phase3) * width + center);
+            if (red > 255 || red < 0) red = 0;
+            if (green > 255 || green < 0) green = 0;
+            if (blue > 255 || blue < 0) blue = 0;
+            builder.append(net.md_5.bungee.api.ChatColor.of(new Color((int) red, (int) green, (int) blue))).append(s);
+            i++;
+        }
+        return builder.toString();
     }
 }

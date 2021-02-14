@@ -23,7 +23,7 @@ public class ClickListener implements Listener {
             if (inv == entry.getKey()) {
                 for (Map.Entry<Integer, ClickEvent> entry1 : entry.getValue().entrySet()) {
                     if (slot == entry1.getKey()) {
-                        entry1.getValue().onClick(entity, item);
+                        entry1.getValue().onClick(inv, entity, item);
                     }
                 }
             }

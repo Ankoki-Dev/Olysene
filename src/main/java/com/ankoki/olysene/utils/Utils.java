@@ -1,9 +1,13 @@
 package com.ankoki.olysene.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.TreeMap;
 
 public final class Utils {
@@ -14,12 +18,17 @@ public final class Utils {
         return ChatColor.translateAlternateColorCodes('&', uncoloured);
     }
 
+    public static net.md_5.bungee.api.ChatColor fromColour(Color colour) {
+        return net.md_5.bungee.api.ChatColor.of(colour);
+    }
+
     public String asString(String[] array, boolean spaces) {
         StringBuilder builder = new StringBuilder();
-        for (String value : array) {
-            builder.append(value);
+        for (String s : array) {
+            builder.append(s);
             if (spaces) builder.append(" ");
         }
+        builder.setLength(builder.length() - 1);
         return builder.toString();
     }
 
@@ -53,21 +62,6 @@ public final class Utils {
         return rn.get(l) + toRoman(number - l);
     }
 
-    public static boolean serverNewer(Version version, Version serverVersion) {
-        int sMajor = Integer.parseInt(serverVersion.name().split("_")[1]);
-        int sMinor = Integer.parseInt(serverVersion.name().split("_")[2].substring(1));
-
-        int vMajor = Integer.parseInt(version.toString().split("_")[1]);
-        int vMinor = Integer.parseInt(version.toString().split("_")[2].substring(1));
-
-        sMajor *= 10;
-        vMajor *= 10;
-        int sFin = sMajor + sMinor;
-        int vFin = vMajor + vMinor;
-
-        return sFin >= vFin;
-    }
-
     //use 0.3, 0.3, 0.3, 0, 2, 4
     public static String rainbow(String message, double freq1, double freq2, double freq3,
                                  double phase1, double phase2, double phase3, boolean pastel) {
@@ -87,5 +81,9 @@ public final class Utils {
             i++;
         }
         return builder.toString();
+    }
+
+    public static void registerListeners(JavaPlugin plugin, Listener... listeners) {
+        Arrays.stream(listeners).forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
 }

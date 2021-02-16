@@ -1,6 +1,7 @@
 package com.ankoki.olysene;
 
 import com.ankoki.olysene.listeners.ClickListener;
+import com.ankoki.olysene.test.TestCMD;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,6 +20,7 @@ public class Olysene extends JavaPlugin {
         this.descriptionFile = this.getDescription();
         this.getServer().getPluginManager().registerEvents(new ClickListener(), this);
         setNmsPackage();
+        regTestCmds();
         logger.info(String.format("%s %s has been enabled in %.2f seconds (%sms)",
                 descriptionFile.getName(),
                 descriptionFile.getVersion(),
@@ -33,5 +35,9 @@ public class Olysene extends JavaPlugin {
 
     public static String getNmsPackage() {
         return nmsPackage;
+    }
+
+    private void regTestCmds() {
+        this.getServer().getPluginCommand("olysene").setExecutor(new TestCMD());
     }
 }

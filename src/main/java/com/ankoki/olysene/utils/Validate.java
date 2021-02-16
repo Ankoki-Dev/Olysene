@@ -85,6 +85,6 @@ public final class Validate {
     }
 
     public static void isLess(int i, int ii, String message) {
-        if (i > ii) throw new IllegalArgumentException(message);
+        if (i < ii) throw new IllegalArgumentException(message);
     }
 }

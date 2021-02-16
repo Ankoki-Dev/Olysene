@@ -94,7 +94,7 @@ public class CircleGenerator {
      * @param ignoreEnclosed - whether to ignore 'enclosed' squares, or those which
      *                       have a neighboring square in both axial directions of
      *                       the circle's plane
-     *                       @param allowBurrs - whether the circle should have 'burrs' or single blocks jutting out at the tips of the axes
+     * @param allowBurrs     - whether the circle should have 'burrs' or single blocks jutting out at the tips of the axes
      * @return a set of locations representing a rasterized circle
      * @throws IllegalArgumentException if center point is null, plane is null, or
      *                                  radius is less than zero
@@ -127,46 +127,46 @@ public class CircleGenerator {
             locs = (HashSet<RelativeLocation>) locs.clone();
 
 
-            if(!allowBurrs) {
+            if (!allowBurrs) {
 
                 switch (plane) {
                     case XZ:
-                        locs.remove(new RelativeLocation(0,0, radius));
-                        locs.add(new RelativeLocation(0, 0, radius-1));
+                        locs.remove(new RelativeLocation(0, 0, radius));
+                        locs.add(new RelativeLocation(0, 0, radius - 1));
 
-                        locs.remove(new RelativeLocation(-radius,0, 0));
-                        locs.add(new RelativeLocation(-radius+1, 0, 0));
+                        locs.remove(new RelativeLocation(-radius, 0, 0));
+                        locs.add(new RelativeLocation(-radius + 1, 0, 0));
 
-                        locs.remove(new RelativeLocation(radius,0, 0));
-                        locs.add(new RelativeLocation( radius-1, 0, 0));
+                        locs.remove(new RelativeLocation(radius, 0, 0));
+                        locs.add(new RelativeLocation(radius - 1, 0, 0));
 
-                        locs.remove(new RelativeLocation(0,0, -radius));
-                        locs.add(new RelativeLocation(0, 0, -radius+1));
+                        locs.remove(new RelativeLocation(0, 0, -radius));
+                        locs.add(new RelativeLocation(0, 0, -radius + 1));
                         break;
                     case XY:
-                        locs.remove(new RelativeLocation(0,radius, 0));
-                        locs.add(new RelativeLocation(0, radius-1, 0));
+                        locs.remove(new RelativeLocation(0, radius, 0));
+                        locs.add(new RelativeLocation(0, radius - 1, 0));
 
-                        locs.remove(new RelativeLocation(0,-radius, 0));
-                        locs.add(new RelativeLocation(0, -radius+1, 0));
+                        locs.remove(new RelativeLocation(0, -radius, 0));
+                        locs.add(new RelativeLocation(0, -radius + 1, 0));
 
-                        locs.remove(new RelativeLocation(radius,0, 0));
-                        locs.add(new RelativeLocation( radius-1, 0, 0));
-                        locs.remove(new RelativeLocation(-radius,0, 0));
-                        locs.add(new RelativeLocation( -radius+1, 0, 0));
+                        locs.remove(new RelativeLocation(radius, 0, 0));
+                        locs.add(new RelativeLocation(radius - 1, 0, 0));
+                        locs.remove(new RelativeLocation(-radius, 0, 0));
+                        locs.add(new RelativeLocation(-radius + 1, 0, 0));
 
                         break;
                     case ZY:
-                        locs.remove(new RelativeLocation(0,radius, 0));
-                        locs.add(new RelativeLocation(0, radius-1, 0));
+                        locs.remove(new RelativeLocation(0, radius, 0));
+                        locs.add(new RelativeLocation(0, radius - 1, 0));
 
-                        locs.remove(new RelativeLocation(0,-radius, 0));
-                        locs.add(new RelativeLocation(0, -radius+1, 0));
+                        locs.remove(new RelativeLocation(0, -radius, 0));
+                        locs.add(new RelativeLocation(0, -radius + 1, 0));
 
-                        locs.remove(new RelativeLocation(0,0, radius));
-                        locs.add(new RelativeLocation(0 , 0, radius-1));
-                        locs.remove(new RelativeLocation(0,0, -radius));
-                        locs.add(new RelativeLocation( 0, 0, -radius+1));
+                        locs.remove(new RelativeLocation(0, 0, radius));
+                        locs.add(new RelativeLocation(0, 0, radius - 1));
+                        locs.remove(new RelativeLocation(0, 0, -radius));
+                        locs.add(new RelativeLocation(0, 0, -radius + 1));
                         break;
                     default:
                         break;
@@ -297,7 +297,7 @@ public class CircleGenerator {
 
         whichCacheToUse.put(radius, locs);
 
-        if(!allowBurrs) {
+        if (!allowBurrs) {
             return generateCircle(center, radius, plane, ignoreEnclosed, allowBurrs);
         }
 

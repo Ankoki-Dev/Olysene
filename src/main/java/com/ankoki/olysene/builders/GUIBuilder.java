@@ -4,6 +4,7 @@ import com.ankoki.olysene.utils.Builder;
 import com.ankoki.olysene.utils.Utils;
 import com.ankoki.olysene.utils.Validate;
 import com.ankoki.olysene.utils.events.ClickEvent;
+import com.ankoki.olysene.utils.events.DragEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
@@ -16,12 +17,13 @@ public class GUIBuilder extends Builder<Inventory> {
     private final Inventory mainInv;
     private final List<Inventory> pages = new ArrayList<>();
     public static Map<Inventory, Map<Integer, ClickEvent>> allClickEvents = new HashMap<>();
+    public static Map<Inventory, DragEvent> allDragEvents = new HashMap<>();
     private Material pageMaterial = null;
 
     public GUIBuilder(int rows, String name) {
         Validate.isGreater(rows, 9, "You cannot have an inventory with more than 9 rows!");
-        Validate.isLess(rows, 2, "You cannot have an inventory with less than 2 rows!");
-        mainInv = Bukkit.createInventory(null, rows, Utils.coloured(name));
+        Validate.isLess(rows, 1, "You cannot have an inventory with less than 1 row!");
+        mainInv = Bukkit.createInventory(null, rows * 9, Utils.coloured(name));
     }
 
     public GUIBuilder(String name, InventoryType type) {
@@ -79,6 +81,11 @@ public class GUIBuilder extends Builder<Inventory> {
         return this;
     }
 
+    public GUIBuilder setDragEvent(DragEvent event) {
+        allDragEvents.put(mainInv, event);
+        return this;
+    }
+
     private Integer[] getBorderSlots(Inventory inv) {
         List<Integer> slotsList = new ArrayList<>();
         InventoryType type = inv.getType();
@@ -110,7 +117,7 @@ public class GUIBuilder extends Builder<Inventory> {
     }
 
     @Override
-    protected Inventory build() {
+    public Inventory build() {
         return mainInv;
     }
 }

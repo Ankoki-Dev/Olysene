@@ -22,7 +22,7 @@ import java.nio.file.StandardCopyOption;
  */
 public class Messages {
     public static boolean init;
-    private static String NULL_VALUE = "<NULL>";
+    private static String NULL_VALUE = "<none>";
     private final JsonObject lang;
 
     public Messages(JavaPlugin plugin, String resourceName) throws JsonParseException, IOException, IllegalStateException, IllegalAccessException {

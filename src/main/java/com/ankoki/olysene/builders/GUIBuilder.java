@@ -4,6 +4,7 @@ import com.ankoki.olysene.utils.Builder;
 import com.ankoki.olysene.utils.Utils;
 import com.ankoki.olysene.utils.Validate;
 import com.ankoki.olysene.utils.events.ClickEvent;
+import com.ankoki.olysene.utils.events.CloseEvent;
 import com.ankoki.olysene.utils.events.DragEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,6 +19,7 @@ public class GUIBuilder extends Builder<Inventory> {
     private final List<Inventory> pages = new ArrayList<>();
     public static Map<Inventory, Map<Integer, ClickEvent>> allClickEvents = new HashMap<>();
     public static Map<Inventory, DragEvent> allDragEvents = new HashMap<>();
+    public static Map<Inventory, CloseEvent> allCloseEvents = new HashMap<>();
     private Material pageMaterial = null;
 
     public GUIBuilder(int rows, String name) {
@@ -83,6 +85,11 @@ public class GUIBuilder extends Builder<Inventory> {
 
     public GUIBuilder setDragEvent(DragEvent event) {
         allDragEvents.put(mainInv, event);
+        return this;
+    }
+
+    public GUIBuilder setCloseEvent(CloseEvent event) {
+        allCloseEvents.put(mainInv, event);
         return this;
     }
 

@@ -9,6 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Utils {
     private Utils() {}
@@ -85,5 +87,23 @@ public final class Utils {
 
     public static void registerListeners(JavaPlugin plugin, Listener... listeners) {
         Arrays.stream(listeners).forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
+    }
+
+    public static String hexColoured(String s) {
+        String msg = ChatColor.translateAlternateColorCodes('&', s);
+        Pattern p = Pattern.compile("#[\\da-fA-F]{6}");
+        Matcher matcher = p.matcher(msg);
+        if (matcher.find()) {
+            int i = matcher.groupCount();
+            msg = msg.replace(matcher.group(1), String.valueOf(net.md_5.bungee.api.ChatColor.of(fromHex(matcher.group(1)))));
+        }
+        return msg;
+    }
+
+    public static Color fromHex(String hex) {
+        hex = hex.replace("#", "");
+        return new Color(Integer.valueOf(hex.substring(0, 2), 16),
+                Integer.valueOf(hex.substring(2, 4), 16),
+                Integer.valueOf(hex.substring(4, 6), 16));
     }
 }
